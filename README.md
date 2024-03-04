@@ -89,7 +89,7 @@ func inputMarks() int {
 func (c *Class) NewClass() {
 
 	// fmt.Println(entry)
-	var studentArray []Student
+	var studentsArray []Student
 	file, err := os.Open("db.txt")
 	if err != nil {
 		panic(err)
