@@ -89,7 +89,7 @@ func inputMarks() int {
 func (c *Class) NewClass() {
 
 	// fmt.Println(entry)
-	var studentArray []Student
+	var studentsArray []Student
 	file, err := os.Open("db.txt")
 	if err != nil {
 		panic(err)
@@ -158,6 +158,70 @@ func (c *Class) ShowStudents() {
 ```
 ---
 
+#### Update Student Function
+
+```go
+func (c *Class) UpdateStudent() {
+
+	roll := inputRoll()
+	// find the student
+	index := 0
+	for ind, stu := range c.Engineers {
+		if stu.RollNo == roll {
+			index = ind
+			break
+		}
+	}
+	// get the data
+	newName := inputName()
+	newMarks := inputMarks()
+	// change the data
+
+	c.Engineers[index] = Student{
+		RollNo: roll,
+		Name:   newName,
+		Marks:  newMarks,
+	}
+}
+
+```
+---
+#### Delete Student Function
+```go
+func (c *Class) DeleteStudent() {
+
+	// get the data
+	roll := inputRoll()
+	index := 0
+
+	// find the index
+	for idx, student := range c.Engineers {
+		if student.RollNo == roll {
+			index = idx
+		}
+	}
+
+	// remove the student
+	c.Engineers = append(c.Engineers[:index], c.Engineers[index+1:]...)
+}
+```
+---
+#### Write To File Function
+```go
+func (c *Class) writeToFile(wg *sync.WaitGroup) {
+
+	// convert []Student into string
+	var result []string
+
+	for _, val := range c.Engineers {
+		current := fmt.Sprintf("%v %v %v", val.Name, val.RollNo, val.Marks)
+		result = append(result, current)
+	}
 
 
-
+	err := os.WriteFile("db.txt", []byte(strings.Join(result, "\n")), 0644)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
+```
