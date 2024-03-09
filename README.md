@@ -34,7 +34,7 @@ func main() {
 ```go
 package features
 
-//Note these are final dependencies and if they give any erro just comment unused ones for time being.
+//Note these are final dependencies and if they give any error just comment unused ones for time being.
 import (
 	"bufio"
 	"fmt"
